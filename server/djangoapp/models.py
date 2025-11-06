@@ -32,7 +32,7 @@ class CarModel(models.Model):
         ('Coupe', 'Coupe'),
     ]
     car_make = models.ForeignKey(CarMake, on_delete=models.CASCADE)
-    dealer_id = models.IntegerField()
+    dealer_id = models.IntegerField(null=True, blank=True)
     name = models.CharField(max_length=100)
     type = models.CharField(max_length=10, choices=CAR_TYPES, default="SUV")
     year = models.IntegerField(default=2025,
