@@ -1,6 +1,6 @@
 # Importaciones requeridas y limpiadas (F401, F811)
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import JsonResponse, HttpResponse
+# from django.shortcuts import render, redirect, get_object_or_404
+from django.http import JsonResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import logout, login, authenticate
 from django.views.decorators.csrf import csrf_exempt
@@ -110,7 +110,6 @@ def get_dealer_details(request, dealer_id):
     if dealer_id:
         endpoint = "/fetchDealer/" + str(dealer_id)
         dealership = get_request_custom(endpoint)
-        # Líneas 115 (E203, E231) corregidas: sin espacio antes del :, con espacio después.
         return JsonResponse({"status": 200, "dealer": dealership})
     else:
         # Línea 129 (E231) corregida: espacio después del :
@@ -124,9 +123,7 @@ def add_review(request):
         try:
             post_review(data)
             return JsonResponse({"status": 200})
-        # Línea 125 (E722) corregida: usar except específico o Exception con alias.
         except Exception:
-            # Línea 127 (E128) corregida: sangría ajustada para coincidir con la de arriba.
             return JsonResponse({"status": 401,
                                  "message": "Error in posting review"})
     else:
