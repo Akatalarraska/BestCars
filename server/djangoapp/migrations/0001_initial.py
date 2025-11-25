@@ -16,7 +16,12 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='CarMake',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(
+                    auto_created=True, 
+                    primary_key=True, 
+                    serialize=False, 
+                    verbose_name='ID'
+                )),
                 ('name', models.CharField(max_length=100)),
                 ('description', models.TextField()),
                 ('country', models.CharField(default='USA', max_length=50)),
@@ -25,13 +30,30 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='CarModel',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(
+                    auto_created=True, 
+                    primary_key=True, 
+                    serialize=False, 
+                    verbose_name='ID'
+                )),
                 ('dealer_id', models.IntegerField(blank=True, null=True)),
                 ('name', models.CharField(max_length=100)),
-                ('type', models.CharField(choices=[('SEDAN', 'Sedan'), ('SUV', 'SUV'), ('WAGON', 'Wagon'), ('Truck', 'Truck'), ('Coupe', 'Coupe')], default='SUV', max_length=10)),
-                ('year', models.IntegerField(default=2025, validators=[django.core.validators.MaxValueValidator(2025), django.core.validators.MinValueValidator(2015)])),
+                ('type', models.CharField(
+                    choices=[('SEDAN', 'Sedan'), ('SUV', 'SUV'), ('WAGON', 'Wagon'), 
+                             ('Truck', 'Truck'), ('Coupe', 'Coupe')], 
+                    default='SUV', 
+                    max_length=10
+                )),
+                ('year', models.IntegerField(
+                    default=2025, 
+                    validators=[django.core.validators.MaxValueValidator(2025), 
+                                django.core.validators.MinValueValidator(2015)]
+                )),
                 ('price', models.FloatField(default=0.0)),
-                ('car_make', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='djangoapp.carmake')),
+                ('car_make', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, 
+                    to='djangoapp.carmake'
+                )),
             ],
         ),
     ]
