@@ -22,8 +22,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY =\
+SECRET_KEY = (
     'django-insecure-ccow$tz_=9%dxu4(0%^(z%nx32#s@(zt9$ih@)5l54yny)wm-0'
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -31,14 +32,20 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    'robertmn92-8000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai',
+    # Línea 40 (E501) dividida:
+    ('robertmn92-8000.theiadockernext-1-labs-prod-theiak8s-4-tor01.'
+     'proxy.cognitiveclass.ai'),
+    # Línea 41 (E501) dividida:
     '.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai',
     '.proxy.cognitiveclass.ai',
     '.cognitiveclass.ai'
 ]
 CSRF_TRUSTED_ORIGINS = [
-    'https://robertmn92-8000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai',
-    'https://*.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai',
+    # Línea 75 (E501/E231) dividida y espaciado corregido:
+    ('https://robertmn92-8000.theiadockernext-1-labs-prod-theiak8s-4-tor01.'
+     'proxy.cognitiveclass.ai'),
+    ('https://*.theiadockernext-1-labs-prod-theiak8s-4-tor01.'
+     'proxy.cognitiveclass.ai'),
     'https://*.proxy.cognitiveclass.ai',
     'https://*.cognitiveclass.ai'
 ]
@@ -72,7 +79,9 @@ ROOT_URLCONF = 'djangoproj.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'frontend/static'), os.path.join(BASE_DIR,'frontend/build')],
+        # Línea 104 (E501) dividida:
+        'DIRS': [os.path.join(BASE_DIR, 'frontend/static'),
+                 os.path.join(BASE_DIR, 'frontend/build')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -145,8 +154,7 @@ MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATICFILES_DIRS = [  
-    os.path.join(BASE_DIR,'frontend/static'),
-    os.path.join(BASE_DIR,'frontend/build/static'),
-    ]
-
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'frontend/static'),
+    os.path.join(BASE_DIR, 'frontend/build/static'),
+]
