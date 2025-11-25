@@ -43,18 +43,17 @@ def initiate():
        "car_make": car_make_instances[3], "dealer_id": 4},
       {"name": "Corolla", "type": "Sedan", "year": 2023,
        "car_make": car_make_instances[4], "dealer_id": 5},
-      {"name":"Camry", "type": "Sedan", "year": 2023,
-       "car_make":car_make_instances[4], "dealer_id": 5},
+      {"name": "Camry", "type": "Sedan", "year": 2023,
+       "car_make": car_make_instances[4], "dealer_id": 5},
       {"name": "Kluger", "type": "SUV", "year": 2023,
        "car_make": car_make_instances[4], "dealer_id": 5},
     ]
 
     for data in car_model_data:
-            CarModel.objects.create(
+        CarModel.objects.create(
                 name=data['name'],
                 car_make=data['car_make'],
                 type=data['type'],
                 year=data['year'],
                 dealer_id=data['dealer_id']  # Agregar dealer_id
             )
-        
