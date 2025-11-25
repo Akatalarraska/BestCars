@@ -1,8 +1,9 @@
 # Uncomment the following imports before adding the Model code
 
 from django.db import models
-from django.utils.timezone import now
+# from django.utils.timezone import now # F401: Comentada/Eliminada si no se usa
 from django.core.validators import MaxValueValidator, MinValueValidator
+
 
 # Create your models here.
 
@@ -10,6 +11,7 @@ class CarMake(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
     country = models.CharField(max_length=50, default="USA")
+
     def __str__(self):
         return f"Make: {self.name} ({self.country})"
 
@@ -35,11 +37,13 @@ class CarModel(models.Model):
     dealer_id = models.IntegerField(null=True, blank=True)
     name = models.CharField(max_length=100)
     type = models.CharField(max_length=10, choices=CAR_TYPES, default="SUV")
-    year = models.IntegerField(default=2025,
-        validators = [
+    year = models.IntegerField(
+        default=2025,
+        validators=[
             MaxValueValidator(2025),
             MinValueValidator(2015)
         ])
     price = models.FloatField(default=0.0)
+    
     def __str__(self):
         return f"Model: {self.car_make.name} - {self.name} ({self.year})"
