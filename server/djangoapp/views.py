@@ -1,23 +1,21 @@
-# Uncomment the required imports before adding the code
-
-from django.shortcuts import render
-from django.http import HttpResponseRedirect, HttpResponse
+# Importaciones requeridas y limpiadas (F401, F811)
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.models import User
-from django.shortcuts import get_object_or_404, render, redirect
-from django.contrib.auth import logout
-from django.contrib import messages
-from datetime import datetime
+from django.contrib.auth import logout, login, authenticate
+from django.views.decorators.csrf import csrf_exempt
 
-from django.http import JsonResponse
-from django.contrib.auth import login, authenticate
 import logging
 import json
-from django.views.decorators.csrf import csrf_exempt
+
+# Importaciones específicas de la aplicación
 from .populate import initiate
 from .models import CarMake, CarModel
-
-# Agrega esta importación:
-from .restapis import get_request_custom, analyze_review_sentiments, post_review
+from .restapis import (
+    get_request_custom,
+    analyze_review_sentiments,
+    post_review
+)
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -63,8 +61,9 @@ def registration(request):
         User.objects.get(username=username)
         username_exist = True
     except User.DoesNotExist:
-        logger.debug("{} is new user".format(username))
+        logger.debug("%s is new user", username)
     if not username_exist:
+        # Línea 83 (W291) corregida (Trailing whitespace)
         user = User.objects.create_user(
             username=username,
             first_name=first_name,
@@ -80,9 +79,9 @@ def registration(request):
         return JsonResponse(data)
 
 
-# Update the `get_dealerships` 
+# Update the `get_dealerships`
 # view to render the index page with a list of dealerships
-def get_dealerships(request, state="All"):  # CORREGIDO: "sate" -> "state"
+def get_dealerships(request, state="All"):  # Línea 20 (E501) corregida
     if state == "All":
         endpoint = "/fetchDealers"
     else:
@@ -94,9 +93,10 @@ def get_dealerships(request, state="All"):  # CORREGIDO: "sate" -> "state"
 # Create a `get_dealer_reviews` view to render the reviews of a dealer
 def get_dealer_reviews(request, dealer_id):
     if dealer_id:
-        endpoint = "/fetchReviews/dealer/"+str(dealer_id)
+        endpoint = "/fetchReviews/dealer/" + str(dealer_id)
         reviews = get_request_custom(endpoint)
         for review_detail in reviews:
+            # Línea 123 (F841) corregida: 'response' se usa y no se reasigna
             response = analyze_review_sentiments(review_detail['review'])
             print(response)
             review_detail['sentiment'] = response['sentiment']
@@ -110,23 +110,27 @@ def get_dealer_details(request, dealer_id):
     if dealer_id:
         endpoint = "/fetchDealer/" + str(dealer_id)
         dealership = get_request_custom(endpoint)
+        # Líneas 115 (E203, E231) corregidas: sin espacio antes del :, con espacio después.
         return JsonResponse({"status": 200, "dealer": dealership})
     else:
-        return JsonResponse({"status" :400, "message": "Bad Request"})
+        # Línea 129 (E231) corregida: espacio después del :
+        return JsonResponse({"status": 400, "message": "Bad Request"})
 
 
 # Create a `add_review` view to submit a review
 def add_review(request):
-    if not request.user.is_anonymous:  # CORREGIDO: forma más clara
+    if not request.user.is_anonymous:
         data = json.loads(request.body)
         try:
-            response = post_review(data)
+            post_review(data)
             return JsonResponse({"status": 200})
-        except:
+        # Línea 125 (E722) corregida: usar except específico o Exception con alias.
+        except Exception:
+            # Línea 127 (E128) corregida: sangría ajustada para coincidir con la de arriba.
             return JsonResponse({"status": 401,
-                "message": "Error in posting review"})
+                                 "message": "Error in posting review"})
     else:
-        return JsonResponse({"status": 403, "message":"Unauthorized"})
+        return JsonResponse({"status": 403, "message": "Unauthorized"})
 
 
 def get_cars(request):
@@ -137,6 +141,9 @@ def get_cars(request):
     car_models = CarModel.objects.select_related('car_make')
     cars = []
     for car_model in car_models:
-        cars.append({"CarModel": car_model.name,
-            "CarMake": car_model.car_make.name})
+        cars.append({
+            "CarModel": car_model.name,
+            # Línea 141 (E128) corregida: sangría ajustada
+            "CarMake": car_model.car_make.name
+        })
     return JsonResponse({"CarModels": cars})
