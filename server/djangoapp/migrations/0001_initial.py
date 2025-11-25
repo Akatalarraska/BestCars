@@ -17,9 +17,9 @@ class Migration(migrations.Migration):
             name='CarMake',
             fields=[
                 ('id', models.BigAutoField(
-                    auto_created=True, 
-                    primary_key=True, 
-                    serialize=False, 
+                    auto_created=True,
+                    primary_key=True,
+                    serialize=False,
                     verbose_name='ID'
                 )),
                 ('name', models.CharField(max_length=100)),
@@ -31,27 +31,28 @@ class Migration(migrations.Migration):
             name='CarModel',
             fields=[
                 ('id', models.BigAutoField(
-                    auto_created=True, 
-                    primary_key=True, 
-                    serialize=False, 
+                    auto_created=True,
+                    primary_key=True,
+                    serialize=False,
                     verbose_name='ID'
                 )),
                 ('dealer_id', models.IntegerField(blank=True, null=True)),
                 ('name', models.CharField(max_length=100)),
                 ('type', models.CharField(
-                    choices=[('SEDAN', 'Sedan'), ('SUV', 'SUV'), ('WAGON', 'Wagon'), 
-                             ('Truck', 'Truck'), ('Coupe', 'Coupe')], 
-                    default='SUV', 
+                    choices=[('SEDAN', 'Sedan'), ('SUV', 'SUV'),
+                             ('WAGON', 'Wagon'), ('Truck', 'Truck'),
+                             ('Coupe', 'Coupe')],
+                    default='SUV',
                     max_length=10
                 )),
                 ('year', models.IntegerField(
                     default=2025, 
-                    validators=[django.core.validators.MaxValueValidator(2025), 
+                    validators=[django.core.validators.MaxValueValidator(2025),
                                 django.core.validators.MinValueValidator(2015)]
                 )),
                 ('price', models.FloatField(default=0.0)),
                 ('car_make', models.ForeignKey(
-                    on_delete=django.db.models.deletion.CASCADE, 
+                    on_delete=django.db.models.deletion.CASCADE,
                     to='djangoapp.carmake'
                 )),
             ],
