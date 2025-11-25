@@ -42,7 +42,7 @@ def get_request_custom(endpoint, **kwargs):
                     data = json.load(f)
                     dealers = data['dealerships']
 
-               if ("/fetchDealers/" in endpoint and 
+               if ("/fetchDealers/" in endpoint and
                         endpoint != "/fetchDealers"):
                     state = endpoint.split("/fetchDealers/")[1]
                     return [d for d in dealers if d['state'] == state]
