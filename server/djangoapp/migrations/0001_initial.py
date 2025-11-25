@@ -46,7 +46,7 @@ class Migration(migrations.Migration):
                     max_length=10
                 )),
                 ('year', models.IntegerField(
-                    default=2025, 
+                    default=2025,
                     validators=[django.core.validators.MaxValueValidator(2025),
                                 django.core.validators.MinValueValidator(2015)]
                 )),
